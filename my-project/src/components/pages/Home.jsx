@@ -1,7 +1,11 @@
+import UserList from '../users/UserList';
+import SearchUser from '../users/SearchUser';
+
 const Home = () => {
     return (
         <div>
-            home
+            <SearchUser />
+            <UserList />
         </div>
     );
 };
