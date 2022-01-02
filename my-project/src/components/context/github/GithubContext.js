@@ -29,7 +29,6 @@ export const GithubProvider = ({children}) => {
             }
         });
         const {items} = await response.json();
-        console.log(items);
 
         dispatch({
             type: 'GET_USERS',
@@ -51,7 +50,6 @@ export const GithubProvider = ({children}) => {
         }
 
         const data = await response.json();
-        console.log(data);
 
         dispatch({
             type: 'GET_SINGLE_USER',
@@ -61,7 +59,6 @@ export const GithubProvider = ({children}) => {
 
     const getUserRepos = async (login) => {
         setLoading();
-        console.log(`${GITHUB_URL}/users/${login}/repos`);
 
         const response = await fetch(`${GITHUB_URL}/users/${login}/repos`, {
             headers: {
@@ -74,7 +71,6 @@ export const GithubProvider = ({children}) => {
         }
 
         const data = await response.json();
-        console.log('repos', data);
 
         dispatch({
             type: 'GET_USER_REPOS',
