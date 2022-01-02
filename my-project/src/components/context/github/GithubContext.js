@@ -9,6 +9,8 @@ const GITHUB_TOKEN = process.env.REACT_APP_GITHUB_TOKEN;
 export const GithubProvider = ({children}) => {
     const initialState = {
         userResult: [],
+        user: {},
+        userRepos: [],
         loading: false,
     };
 
@@ -35,6 +37,51 @@ export const GithubProvider = ({children}) => {
         });
     };
 
+    const getSingleUser = async (login) => {
+        setLoading();
+
+        const response = await fetch(`${GITHUB_URL}/users/${login}`, {
+            headers: {
+                Authorization: `token ${GITHUB_TOKEN}`
+            }
+        });
+
+        if(response.status == '404'){
+            window.location = '/notfound';
+        }
+
+        const data = await response.json();
+        console.log(data);
+
+        dispatch({
+            type: 'GET_SINGLE_USER',
+            payload: data,
+        });
+    };
+
+    const getUserRepos = async (login) => {
+        setLoading();
+        console.log(`${GITHUB_URL}/users/${login}/repos`);
+
+        const response = await fetch(`${GITHUB_URL}/users/${login}/repos`, {
+            headers: {
+                Authorization: `token ${GITHUB_TOKEN}`
+            }
+        });
+
+        if(response.status == '404'){
+            window.location = '/notfound';
+        }
+
+        const data = await response.json();
+        console.log('repos', data);
+
+        dispatch({
+            type: 'GET_USER_REPOS',
+            payload: data,
+        });
+    };
+
     const setLoading = () => dispatch({type: 'SET_LOADING'});
 
     const handleClear = () => {
@@ -49,8 +96,12 @@ export const GithubProvider = ({children}) => {
             value={{
                 userResult: state.userResult,
                 loading: state.loading,
+                user: state.user,
+                userRepos: state.userRepos,              
                 searchUsers,
-                handleClear
+                handleClear,
+                getSingleUser,
+                getUserRepos,
             }}>
                 {children}
         </GithubContext.Provider>

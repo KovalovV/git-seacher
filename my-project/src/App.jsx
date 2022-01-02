@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Home from './components/pages/Home';
 import About from './components/pages/About';
+import UserDetails from './components/users/UserDetails';
 import NotFound from './components/pages/NotFound';
 import Footer from './components/layout/Footer';
 import Alert from './components/layout/Alert';
@@ -23,6 +24,7 @@ const App = () => {
               <Routes>
                 <Route path='/' element={<Home />} />
                 <Route path='/about' element={<About />} />
+                <Route path='/users/:login' element={<UserDetails />} />
                 <Route path='/notfound' element={<NotFound />} />
                 <Route path='/*' element={<NotFound />} />
               </Routes>
